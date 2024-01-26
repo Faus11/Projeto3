@@ -1,4 +1,6 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
+import { Router } from '@angular/router';
+
 
 import {
   CommandComponent,
@@ -31,6 +33,7 @@ import {CommonModule, NgIf, NgStyle} from "@angular/common";
 })
 export class CmdkComponent {
   @ViewChild('cmdkCommand') cmdkCommand!: ElementRef<HTMLDivElement>;
+  constructor(private router: Router) {}
   inputValue = '';
   pages: Array<string> = ['home'];
   loading = false;
@@ -102,6 +105,11 @@ export class CmdkComponent {
     "Price audit 01/01/2024",
     "Inventory",
     "Scan audit 01",
+    "Quantas tarefas existem?",
+    "Quantos gráficos existem?",
+    "Price audit 01/01/2024",
+    "Inventory",
+    "Scan audit 01",
   ];
   currentTask = '';
   styleTransform = '';
@@ -168,6 +176,18 @@ export class CmdkComponent {
       this.pages.push('Task Detail')
       this.loading = false;
     }, 2000);
+  }
+
+  goToHomePage() {
+    if (this.activePage === 'tasks' || this.activePage === 'Task Detail' ) {
+      this.popPage(); // Remove a página "tasks" da pilha de páginas
+  
+      // Verifica se "home" já está na pilha de páginas
+      if (!this.pages.includes('home')) {
+        this.pages.push('home'); // Adiciona a página "home" à pilha de páginas apenas se ainda não estiver lá
+      }
+    }
+    // Se a activePage não for "tasks", a função não fará nada
   }
 
 }
