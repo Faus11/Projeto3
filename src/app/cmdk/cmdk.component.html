@@ -41,16 +41,36 @@
           </cmdk-group>
         </ng-container>
         <ng-container *ngIf="activePage === 'tasks'">
-
-          
-          <button
-            cmdkItem
-            *ngFor="let item of tasksList; let i = index"
-            [value]="item"
-            (click)="searchTask(item)"
-          >
-            {{ item }}
-          </button>
+          <cmdk-group label="Tarefas">
+            <button
+              cmdkItem
+              *ngFor="let item of tasksList.slice(0, 3); let i = index"
+              [value]="item"
+              (click)="searchTask(item)"
+            >
+              {{ item }}
+            </button>
+          </cmdk-group>
+          <cmdk-group label="Sales">
+            <button
+              cmdkItem
+              *ngFor="let item of tasksList.slice(3, 6); let i = index"
+              [value]="item"
+              (click)="searchTask(item)"
+            >
+              {{ item }}
+            </button>
+          </cmdk-group>
+          <cmdk-group label="Exemplos">
+            <button
+              cmdkItem
+              *ngFor="let item of tasksList.slice(6); let i = index"
+              [value]="item"
+              (click)="searchTask(item)"
+            >
+              {{ item }}
+            </button>
+          </cmdk-group>
         </ng-container>
         <ng-container *ngIf="activePage === 'Task Detail'">
           <div class="task-detail">

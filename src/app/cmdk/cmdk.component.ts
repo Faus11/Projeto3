@@ -1,6 +1,5 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-
 
 import {
   CommandComponent,
@@ -11,7 +10,7 @@ import {
   ListComponent,
   SeparatorComponent,
 } from '@ngneat/cmdk';
-import {CommonModule, NgIf, NgStyle} from "@angular/common";
+import { CommonModule, NgIf, NgStyle } from "@angular/common";
 
 @Component({
   selector: 'app-cmdk',
@@ -33,7 +32,7 @@ import {CommonModule, NgIf, NgStyle} from "@angular/common";
 })
 export class CmdkComponent {
   @ViewChild('cmdkCommand') cmdkCommand!: ElementRef<HTMLDivElement>;
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
   inputValue = '';
   pages: Array<string> = ['home'];
   loading = false;
@@ -64,7 +63,6 @@ export class CmdkComponent {
           label: 'See Tasks Metrics',
           icon: 'ph-chart-pie',
           shortcut: '',
-          
         },
       ],
     },
@@ -100,7 +98,7 @@ export class CmdkComponent {
       ],
     },
   ];
-  
+
   readonly tasksList = [
     "Quantas tarefas de relabeling existem na lista?",
     "Qual é o nome da terceira tarefa de auditoria de preço?",
@@ -112,6 +110,7 @@ export class CmdkComponent {
     "Qual é o índice da tarefa Scan audit 01 na lista?",
     "Quais são as tarefas que contêm a palavra Price?",
   ];
+
   currentTask = '';
   styleTransform = '';
 
@@ -180,9 +179,9 @@ export class CmdkComponent {
   }
 
   goToHomePage() {
-    if (this.activePage === 'tasks' || this.activePage === 'Task Detail' ) {
+    if (this.activePage === 'tasks' || this.activePage === 'Task Detail') {
       this.popPage(); // Remove a página "tasks" da pilha de páginas
-  
+
       // Verifica se "home" já está na pilha de páginas
       if (!this.pages.includes('home')) {
         this.pages.push('home'); // Adiciona a página "home" à pilha de páginas apenas se ainda não estiver lá
@@ -190,5 +189,4 @@ export class CmdkComponent {
     }
     // Se a activePage não for "tasks", a função não fará nada
   }
-
 }
