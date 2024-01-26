@@ -64,6 +64,7 @@ export class CmdkComponent {
           label: 'See Tasks Metrics',
           icon: 'ph-chart-pie',
           shortcut: '',
+          
         },
       ],
     },
@@ -99,17 +100,17 @@ export class CmdkComponent {
       ],
     },
   ];
+  
   readonly tasksList = [
-    "Relabelling 01",
-    "Relabelling 02",
-    "Price audit 01/01/2024",
-    "Inventory",
-    "Scan audit 01",
-    "Quantas tarefas existem?",
-    "Quantos gráficos existem?",
-    "Price audit 01/01/2024",
-    "Inventory",
-    "Scan audit 01",
+    "Quantas tarefas de relabeling existem na lista?",
+    "Qual é o nome da terceira tarefa de auditoria de preço?",
+    "Existe alguma tarefa relacionada a Inventory na lista?",
+    "Quantas tarefas de auditoria de preço estão agendadas para 01/01/2024?",
+    "Quantas tarefas existem no total?",
+    "Existem tarefas duplicadas na lista?",
+    "Se houver tarefas duplicadas, quais são?",
+    "Qual é o índice da tarefa Scan audit 01 na lista?",
+    "Quais são as tarefas que contêm a palavra Price?",
   ];
   currentTask = '';
   styleTransform = '';
