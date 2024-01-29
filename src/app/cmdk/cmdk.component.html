@@ -16,7 +16,7 @@
       <div *ngIf="loading" class="cmdk-loading">{{ loadingMsg }}</div>
       <div *cmdkEmpty>{{ emptyMsg }}</div>
 
-      <button cmdkItem (click)="goToHomePage()">
+      <button cmdkItem *ngIf="activePage !== 'home'" (click)="goToHomePage()">
         <i class="ph ph-arrow-circle-left"></i> Back
       </button>
 
@@ -82,3 +82,4 @@
     </cmdk-list>
   </cmdk-command>
 </div>
+
