@@ -19,7 +19,7 @@
       <button cmdkItem *ngIf="activePage !== 'home'" (click)="goToHomePage()">
         <i class="ph ph-arrow-circle-left"></i> Back
       </button>
-
+      
       <div class="cmdk-list-pages">
         <ng-container *ngIf="activePage === 'home'">
           <cmdk-group [label]="group.group" *ngFor="let group of groups">
@@ -82,4 +82,3 @@
     </cmdk-list>
   </cmdk-command>
 </div>
-

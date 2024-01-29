@@ -136,22 +136,23 @@ export class CmdkComponent {
       ev.preventDefault();
       this.pages.push('tasks');
     }
-
+  
     // default behaviours
     if (ev.key === 'Enter') {
       this.bounce();
     }
-
-    if (this.isHome || this.inputValue.length) {
+  
+    if (this.isHome) {
       return;
     }
-
+  
     if (ev.key === 'Backspace') {
       ev.preventDefault();
       this.popPage();
       this.bounce();
     }
   }
+  
 
   popPage() {
     this.pages.splice(-1, 1);
@@ -189,4 +190,6 @@ export class CmdkComponent {
     }
     // Se a activePage não for "tasks", a função não fará nada
   }
+  
 }
+  
