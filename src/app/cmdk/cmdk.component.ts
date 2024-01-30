@@ -86,6 +86,9 @@ export class CmdkComponent {
       items: [
         {
           label: 'Ask to find...',
+          itemSelected: () => {
+            this.showMessage();
+          },
           icon: 'ph-question',
           shortcut: '^ A',
         },
@@ -179,8 +182,15 @@ export class CmdkComponent {
     }, 2000);
   }
 
+  showMessage() {
+    // Display message instead of navigating to tasks page
+    this.loading = false;
+    
+    this.pages.push('Help');
+  }
+
   goToHomePage() {
-    if (this.activePage === 'tasks' || this.activePage === 'Task Detail') {
+    if (this.activePage === 'tasks' || this.activePage === 'Task Detail' || this.activePage === 'Help') {
       this.popPage(); // Remove a página "tasks" da pilha de páginas
 
       // Verifica se "home" já está na pilha de páginas
@@ -190,6 +200,9 @@ export class CmdkComponent {
     }
     // Se a activePage não for "tasks", a função não fará nada
   }
-  
+
+
 }
+
+
   
