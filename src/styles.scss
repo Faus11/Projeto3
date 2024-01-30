@@ -87,7 +87,7 @@ a {
   --grayA11: hsla(0, 0%, 0%, 0.565);
   --grayA12: hsla(0, 0%, 0%, 0.91);
  
- 
+
 
 
 }
@@ -137,3 +137,12 @@ a {
   --blue11: hsl(210, 100%, 66.1%);
   --blue12: hsl(206, 98%, 95.8%);
 }
+.logo {
+  position: fixed;
+  top: 20px; /* Ajuste conforme necessário */
+  left: 20px; /* Ajuste conforme necessário */
+  width: 100px; /* Ajuste conforme necessário */
+  height: auto; /* Ajuste conforme necessário */
+  z-index: 1000; /* Garante que o logo fique sobre outros elementos, se necessário */
+}
+
