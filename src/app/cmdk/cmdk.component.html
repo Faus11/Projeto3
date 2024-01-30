@@ -20,14 +20,12 @@
         <i class="ph ph-arrow-circle-left"></i> Back
       </button>
 
-      
       <ng-container *ngIf="activePage === 'Help'">
         <div class="additional-message">
           Qualquer problema contacte para o mail t.veloso.afonso@ipvc.pt.
-          
         </div>
       </ng-container>
-      
+
       <div class="cmdk-list-pages">
         <ng-container *ngIf="activePage === 'home'">
           <cmdk-group [label]="group.group" *ngFor="let group of groups">
@@ -38,7 +36,6 @@
                 [value]="item.label"
                 (selected)="item.itemSelected && item.itemSelected()"
               >
-                <!--                <ng-container *dynamicView="item.icon"></ng-container>-->
                 <i class="ph {{item.icon}}"></i>
                 {{ item.label }}
                 <div class="cmdk-vercel-shortcuts" *ngIf="item.shortcut">
@@ -85,6 +82,7 @@
             <span>Task detail</span>
             <span>{{ currentTask }}</span>
           </div>
+          <canvas #myChart></canvas>
         </ng-container>
       </div>
     </cmdk-list>
