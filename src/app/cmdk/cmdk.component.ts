@@ -1,7 +1,6 @@
-import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { Chart } from 'chart.js';
-import { CommonModule } from "@angular/common";
+
 
 import {
   CommandComponent,
@@ -12,6 +11,7 @@ import {
   ListComponent,
   SeparatorComponent,
 } from '@ngneat/cmdk';
+import { CommonModule, NgIf, NgStyle } from "@angular/common";
 
 @Component({
   selector: 'app-cmdk',
@@ -26,13 +26,14 @@ import {
     ItemDirective,
     EmptyDirective,
     SeparatorComponent,
+    NgStyle,
+    NgIf,
     CommonModule,
   ],
 })
-export class CmdkComponent implements AfterViewInit {
+export class CmdkComponent {
   @ViewChild('cmdkCommand') cmdkCommand!: ElementRef<HTMLDivElement>;
-  @ViewChild('myChart') myChart!: ElementRef<HTMLCanvasElement>;
-
+  constructor(private router: Router) { }
   inputValue = '';
   askToFindMessage: string = '';
   pages: Array<string> = ['home'];
@@ -93,6 +94,12 @@ export class CmdkComponent implements AfterViewInit {
           icon: 'ph-question',
           shortcut: '^ A',
         },
+        // {
+        //   label: 'Contact Support',
+        //   icon: ContactIconComponent,
+        //   shortcut: '',
+        //   separatorOnTop: true,
+        // },
       ],
     },
   ];
@@ -129,11 +136,13 @@ export class CmdkComponent implements AfterViewInit {
   }
 
   onKeyDown(ev: KeyboardEvent) {
+    // handle shortcuts
     if (ev.ctrlKey && ev.key === 't') {
       ev.preventDefault();
       this.pages.push('tasks');
     }
   
+    // default behaviours
     if (ev.key === 'Enter') {
       this.bounce();
     }
@@ -148,6 +157,7 @@ export class CmdkComponent implements AfterViewInit {
       this.bounce();
     }
   }
+  
 
   popPage() {
     this.pages.splice(-1, 1);
@@ -171,62 +181,30 @@ export class CmdkComponent implements AfterViewInit {
     setTimeout(() => {
       this.pages.push('Task Detail')
       this.loading = false;
-      this.createChart();
     }, 2000);
   }
 
   showMessage() {
+    
     this.loading = false;
+    
     this.pages.push('Help');
   }
 
   goToHomePage() {
     if (this.activePage === 'tasks' || this.activePage === 'Task Detail' || this.activePage === 'Help') {
       this.popPage(); 
+
+     
       if (!this.pages.includes('home')) {
         this.pages.push('home'); 
       }
     }
+    
   }
 
-  ngAfterViewInit() {
-    if (this.activePage === 'Task Detail') {
-      this.createChart();
-    }
-  }
 
-  createChart() {
-    const ctx = this.myChart.nativeElement.getContext('2d') as CanvasRenderingContext2D;
-  
-    if (!ctx) {
-      console.error('Unable to get 2D context for chart');
-      return;
-    }
-  
-    new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: ['Label 1', 'Label 2', 'Label 3'],
-        datasets: [{
-          label: 'Chart Title',
-          data: [10, 20, 30],
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-          ],
-          borderColor: [
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-          ],
-          borderWidth: 1,
-        }],
-      },
-    });
-  }
-  
-  
-  
 }
 
+
+  
