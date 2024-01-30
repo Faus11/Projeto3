@@ -19,6 +19,14 @@
       <button cmdkItem *ngIf="activePage !== 'home'" (click)="goToHomePage()">
         <i class="ph ph-arrow-circle-left"></i> Back
       </button>
+
+      
+      <ng-container *ngIf="activePage === 'Help'">
+        <div class="additional-message">
+          Qualquer problema contacte para o mail t.veloso.afonso@ipvc.pt.
+          
+        </div>
+      </ng-container>
       
       <div class="cmdk-list-pages">
         <ng-container *ngIf="activePage === 'home'">

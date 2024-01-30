@@ -1,6 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
+
 import {
   CommandComponent,
   EmptyDirective,
@@ -34,6 +35,7 @@ export class CmdkComponent {
   @ViewChild('cmdkCommand') cmdkCommand!: ElementRef<HTMLDivElement>;
   constructor(private router: Router) { }
   inputValue = '';
+  askToFindMessage: string = '';
   pages: Array<string> = ['home'];
   loading = false;
   loadingMsg = 'loading page...';
@@ -183,7 +185,7 @@ export class CmdkComponent {
   }
 
   showMessage() {
-    // Display message instead of navigating to tasks page
+    
     this.loading = false;
     
     this.pages.push('Help');
@@ -191,14 +193,14 @@ export class CmdkComponent {
 
   goToHomePage() {
     if (this.activePage === 'tasks' || this.activePage === 'Task Detail' || this.activePage === 'Help') {
-      this.popPage(); // Remove a página "tasks" da pilha de páginas
+      this.popPage(); 
 
-      // Verifica se "home" já está na pilha de páginas
+     
       if (!this.pages.includes('home')) {
-        this.pages.push('home'); // Adiciona a página "home" à pilha de páginas apenas se ainda não estiver lá
+        this.pages.push('home'); 
       }
     }
-    // Se a activePage não for "tasks", a função não fará nada
+    
   }
 
 
