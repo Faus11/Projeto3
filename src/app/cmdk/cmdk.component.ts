@@ -177,8 +177,11 @@ export class CmdkComponent {
   searchTask(task: string) {
     this.loading = true;
     
-    if (task === "Quantas tarefas existem no total?") {
-      // Se for a tarefa específica, exiba o número total de tarefas
+    if (task === "Existe alguma tarefa relacionada a Inventory na lista?") {
+      // Se for a tarefa específica, exiba "Não" por padrão
+      this.currentTask = "Não";
+    } else if (task === "Quantas tarefas existem no total?") {
+      // Se for a tarefa "Quantas tarefas existem no total?", exiba o número total de tarefas
       this.currentTask = `${this.tasksList.length} tarefas`;
     } else {
       // Caso contrário, exiba a tarefa selecionada normalmente
@@ -190,6 +193,7 @@ export class CmdkComponent {
       this.loading = false;
     }, 2000);
   }
+  
 
   showMessage() {
     
