@@ -176,10 +176,17 @@ export class CmdkComponent {
 
   searchTask(task: string) {
     this.loading = true;
-    this.currentTask = task;
-
+    
+    if (task === "Quantas tarefas existem no total?") {
+      // Se for a tarefa específica, exiba o número total de tarefas
+      this.currentTask = `${this.tasksList.length} tarefas`;
+    } else {
+      // Caso contrário, exiba a tarefa selecionada normalmente
+      this.currentTask = task;
+    }
+  
     setTimeout(() => {
-      this.pages.push('Task Detail')
+      this.pages.push('Task Detail');
       this.loading = false;
     }, 2000);
   }
