@@ -180,9 +180,25 @@ export class CmdkComponent {
     if (task === "Existe alguma tarefa relacionada a Inventory na lista?") {
       // Se for a tarefa específica, exiba "Não" por padrão
       this.currentTask = "Não";
+      
     } else if (task === "Quantas tarefas existem no total?") {
-      // Se for a tarefa "Quantas tarefas existem no total?", exiba o número total de tarefas
       this.currentTask = `${this.tasksList.length} tarefas`;
+
+    } else if (task === "Quantas tarefas de relabeling existem na lista?") {
+      this.currentTask = `2 tarefas`;
+
+    } else if (task === "Existe alguma tarefa relacionada a Inventory na lista?") {
+      this.currentTask = `Não mano tens que ver`;
+
+    } else if (task === "Quantas tarefas de auditoria de preço estão agendadas para 01/01/2024?") {
+      this.currentTask = `3 tarefas`;
+      
+    } else if (task === "Existem tarefas duplicadas na lista?") {
+      this.currentTask = `Existem 3`;
+
+    } else if (task === "Se houver tarefas duplicadas, quais são?") {
+      this.currentTask = `Auditoria externa e interna`;
+
     } else {
       // Caso contrário, exiba a tarefa selecionada normalmente
       this.currentTask = task;
