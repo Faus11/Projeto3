@@ -119,6 +119,7 @@ export class CmdkComponent {
 
   readonly tasksList = [
     "Quantas tarefas de relabeling existem na lista?",
+    "Lista tarefas",
     "Qual é o nome da terceira tarefa de auditoria de preço?",
     "Existe alguma tarefa relacionada a Inventory na lista?",
     "Quantas tarefas de auditoria de preço estão agendadas para 01/01/2024?",
@@ -135,27 +136,21 @@ export class CmdkComponent {
   filter: (value: string, search: string) => boolean = (value, search) => {
     return value.toLowerCase().includes(search.toLowerCase());
   }
-
   get activePage() {
     return this.pages[this.pages.length - 1];
   }
-
   get isHome() {
     return this.activePage === 'home';
   }
-
   setInputValue(ev: Event) {
     let input = ev.target as HTMLInputElement;
     this.inputValue = input.value;
-
     if (this.inputValue.trim().length > 0) {
       const userMessage: ChatMessage = {
         content: `Eu: ${this.inputValue}`,
         sender: 'user',
       };
-
       this.messages.push(userMessage);
-
       this.backendService
         .post('/chat', { question: this.inputValue })
         .subscribe(
@@ -164,7 +159,6 @@ export class CmdkComponent {
               content: `Chatbot: ${response[1].content}`,
               sender: 'bot',
             };
-
             this.messages.push(botMessage);
             input.value = '';
           },
@@ -174,90 +168,64 @@ export class CmdkComponent {
         );
     }
   }
-
   onKeyDown(ev: KeyboardEvent) {
     // handle shortcuts
     if (ev.ctrlKey && ev.key === 't') {
       ev.preventDefault();
       this.pages.push('tasks');
     }
-  
     // default behaviours
     if (ev.key === 'Enter') {
       this.bounce();
     }
-  
     if (this.isHome) {
       return;
     }
-  
     if (ev.key === 'Backspace') {
       ev.preventDefault();
       this.popPage();
       this.bounce();
     }
   }
-  
-
   popPage() {
     this.pages.splice(-1, 1);
   }
-
   bounce() {
     this.styleTransform = 'scale(0.96)';
     setTimeout(() => {
       this.styleTransform = '';
     }, 100);
   }
-
   searchTasks() {
     this.pages.push('tasks');
   }
-
   searchTask(task: string) {
     this.loading = true;
-    
-    if (task === "Existe alguma tarefa relacionada a Inventory na lista?") {
-      // Se for a tarefa específica, exiba "Não" por padrão
-      this.currentTask = "Não";
-      
-    } else if (task === "Quantas tarefas existem no total?") {
-      this.currentTask = `${this.tasksList.length} tarefas`;
-
-    } else if (task === "Quantas tarefas de relabeling existem na lista?") {
-      this.currentTask = `2 tarefas`;
-
-    } else if (task === "Existe alguma tarefa relacionada a Inventory na lista?") {
-      this.currentTask = `Não mano tens que ver`;
-
-    } else if (task === "Quantas tarefas de auditoria de preço estão agendadas para 01/01/2024?") {
-      this.currentTask = `3 tarefas`;
-      
-    } else if (task === "Existem tarefas duplicadas na lista?") {
-      this.currentTask = `Existem 3`;
-
-    } else if (task === "Se houver tarefas duplicadas, quais são?") {
-      this.currentTask = `Auditoria externa e interna`;
-
-    } else {
-      // Caso contrário, exiba a tarefa selecionada normalmente
-      this.currentTask = task;
-    }
+    this.backendService.post('/chat', { question: task }).subscribe(
+      (response) => {
+        this.currentTask = response[1].content;
+        setTimeout(() => {
+          this.pages.push('Task Detail');
+          this.loading = false;
+        }, 2000);
+      },
+      (error) => {
+        console.error('Error fetching task detail:', error);
+        this.loading = false;
+      }
+    );
   
     setTimeout(() => {
       this.pages.push('Task Detail');
       this.loading = false;
     }, 2000);
   }
-  
-
   showMessage() {
     
     this.loading = false;
     
     this.pages.push('Help');
   }
-
   goToHomePage() {
     if (this.activePage === 'tasks' || this.activePage === 'Task Detail' || this.activePage === 'Help') {
       this.popPage(); 
@@ -267,11 +235,5 @@ export class CmdkComponent {
         this.pages.push('home'); 
       }
     }
-    
   }
-
-
 }
-
-
-  
