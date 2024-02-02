@@ -12,6 +12,13 @@ import {
   SeparatorComponent,
 } from '@ngneat/cmdk';
 import { CommonModule, NgIf, NgStyle } from "@angular/common";
+import { BackendService } from './backend.service';
+import { HttpClientModule } from '@angular/common/http';
+
+interface ChatMessage {
+  content: string;
+  sender: 'user' | 'bot';
+}
 
 @Component({
   selector: 'app-cmdk',
@@ -29,12 +36,18 @@ import { CommonModule, NgIf, NgStyle } from "@angular/common";
     NgStyle,
     NgIf,
     CommonModule,
+    HttpClientModule,
   ],
+  providers: [BackendService],
 })
 export class CmdkComponent {
   @ViewChild('cmdkCommand') cmdkCommand!: ElementRef<HTMLDivElement>;
-  constructor(private router: Router) { }
+
+  constructor(private router: Router, private backendService: BackendService) {}
+
   inputValue = '';
+  messages: ChatMessage[] = [];
+
   askToFindMessage: string = '';
   pages: Array<string> = ['home'];
   loading = false;
@@ -132,7 +145,34 @@ export class CmdkComponent {
   }
 
   setInputValue(ev: Event) {
-    this.inputValue = (ev.target as HTMLInputElement).value;
+    let input = ev.target as HTMLInputElement;
+    this.inputValue = input.value;
+
+    if (this.inputValue.trim().length > 0) {
+      const userMessage: ChatMessage = {
+        content: `Eu: ${this.inputValue}`,
+        sender: 'user',
+      };
+
+      this.messages.push(userMessage);
+
+      this.backendService
+        .post('/chat', { question: this.inputValue })
+        .subscribe(
+          (response) => {
+            const botMessage: ChatMessage = {
+              content: `Chatbot: ${response[1].content}`,
+              sender: 'bot',
+            };
+
+            this.messages.push(botMessage);
+            input.value = '';
+          },
+          (error) => {
+            console.error('Error posting data:', error);
+          }
+        );
+    }
   }
 
   onKeyDown(ev: KeyboardEvent) {

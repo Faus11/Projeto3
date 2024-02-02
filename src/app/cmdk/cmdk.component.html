@@ -12,9 +12,14 @@
       placeholder="What do you need?"
       (change)="setInputValue($event)"
     />
+    <div class="chat-container">
+      <div *ngFor="let message of messages" class="message" [ngClass]="{'user-message': message.sender === 'user', 'bot-message': message.sender === 'bot'}">
+        {{ message.content }}
+      </div>
+    </div>
     <cmdk-list class="{{loading ? 'loading' : ''}}">
       <div *ngIf="loading" class="cmdk-loading">{{ loadingMsg }}</div>
-      <div *cmdkEmpty>{{ emptyMsg }}</div>
+      <div *cmdkEmpty>{{ emptyMsg }} </div>
 
       <button cmdkItem *ngIf="activePage !== 'home'" (click)="goToHomePage()">
         <i class="ph ph-arrow-circle-left"></i> Back
