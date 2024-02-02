@@ -119,7 +119,7 @@ export class CmdkComponent {
 
   readonly tasksList = [
     "Quantas tarefas de relabeling existem na lista?",
-    "Lista tarefas",
+    "lista tarefas",
     "Qual é o nome da terceira tarefa de auditoria de preço?",
     "Existe alguma tarefa relacionada a Inventory na lista?",
     "Quantas tarefas de auditoria de preço estão agendadas para 01/01/2024?",
@@ -145,6 +145,10 @@ export class CmdkComponent {
   setInputValue(ev: Event) {
     let input = ev.target as HTMLInputElement;
     this.inputValue = input.value;
+    
+    // Limpar o histórico de mensagens antes de enviar uma nova mensagem
+    this.messages = [];
+  
     if (this.inputValue.trim().length > 0) {
       const userMessage: ChatMessage = {
         content: `Eu: ${this.inputValue}`,
@@ -168,6 +172,7 @@ export class CmdkComponent {
         );
     }
   }
+  
   onKeyDown(ev: KeyboardEvent) {
     // handle shortcuts
     if (ev.ctrlKey && ev.key === 't') {
@@ -236,4 +241,5 @@ export class CmdkComponent {
       }
     }
   }
+  
 }
