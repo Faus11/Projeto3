@@ -118,16 +118,13 @@ export class CmdkComponent {
   ];
 
   readonly tasksList = [
-    "Quantas tarefas de relabeling existem na lista?",
+    "Qual é o ID da tarefa que pertence à loja 40 e à categoria zaffari?",
     "lista tarefas",
-    "Qual é o nome da terceira tarefa de auditoria de preço?",
-    "Existe alguma tarefa relacionada a Inventory na lista?",
-    "Quantas tarefas de auditoria de preço estão agendadas para 01/01/2024?",
+    " Qual é o utilizador ao qual a tarefa com o ID c6e23d19-0185-44bd-9127-02301871eb7b está atribuído?",
+    "Quantas tarefas pertencem à loja 50 e à categoria zaffari?",
+    " Quais são os IDs das tarefas que pertencem à loja 33 e à categoria zaffari?",
     "Quantas tarefas existem no total?",
-    "Existem tarefas duplicadas na lista?",
-    "Se houver tarefas duplicadas, quais são?",
-    "Qual é o índice da tarefa Scan audit 01 na lista?",
-    "Quais são as tarefas que contêm a palavra Price?",
+    "A tarefa com o ID b97fd9e7-0e53-4553-8186-11869262901c está atribuída a algum utilizador?",
   ];
 
   currentTask = '';
