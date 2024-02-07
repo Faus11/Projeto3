@@ -202,26 +202,20 @@ export class CmdkComponent {
     this.pages.push('tasks');
   }
   searchTask(task: string) {
-    this.loading = true;
+    this.loading = true; // Define loading como true antes de fazer a solicitação
     this.backendService.post('/chat', { question: task }).subscribe(
       (response) => {
         this.currentTask = response[1].content;
-        setTimeout(() => {
-          this.pages.push('Task Detail');
-          this.loading = false;
-        }, 2000);
+        this.pages.push('Task Detail');
+        this.loading = false; // Define loading como false após receber a resposta da API
       },
       (error) => {
         console.error('Error fetching task detail:', error);
         this.loading = false;
       }
     );
-  
-    setTimeout(() => {
-      this.pages.push('Task Detail');
-      this.loading = false;
-    }, 2000);
   }
+  
   showMessage() {
     
     this.loading = false;
