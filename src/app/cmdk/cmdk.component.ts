@@ -52,7 +52,7 @@ export class CmdkComponent {
   pages: Array<string> = ['home'];
   loading = false;
   loadingMsg = 'loading page...';
-  emptyMsg = 'No results found.';
+  emptyMsg = '';
   readonly groups: Array<{
     group: string;
     items: Array<{
