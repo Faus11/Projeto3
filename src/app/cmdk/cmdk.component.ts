@@ -119,9 +119,10 @@ export class CmdkComponent {
 
   readonly tasksList = [
     "Qual é o ID da tarefa que pertence à loja 40 e à categoria zaffari?",
-    "lista tarefas",
+    "Lista-me tudo.",
     " Qual é o utilizador ao qual a tarefa com o ID c6e23d19-0185-44bd-9127-02301871eb7b está atribuído?",
     "Quantas tarefas pertencem à loja 50 e à categoria zaffari?",
+    "Quantas tarefas pertencem à loja 40 ?",
     " Quais são os IDs das tarefas que pertencem à loja 33 e à categoria zaffari?",
     "Quantas tarefas existem no total?",
     "A tarefa com o ID b97fd9e7-0e53-4553-8186-11869262901c está atribuída a algum utilizador?",
