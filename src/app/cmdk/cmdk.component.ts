@@ -321,9 +321,7 @@ export class CmdkComponent implements AfterViewInit {
         },
       ],
     },
-<<<<<<< HEAD
-   
-=======
+
     {
       group: 'Resources',
       items: [
@@ -345,7 +343,7 @@ export class CmdkComponent implements AfterViewInit {
         },
       ],
     },
->>>>>>> 02b435ade64e2af2f746ad224017cae5fe6b0b35
+
     {
       group: 'Help',
       items: [
