@@ -92,6 +92,15 @@
             <span>{{ currentTask }}</span>
           </div>
         </ng-container>
+        <ng-container *ngIf="activePage === 'searchResources'">
+          <div echarts [options]="searchResourcesOptions" class="demo-chart"></div>
+        </ng-container>
+        <ng-container *ngIf="activePage === 'resourceMetrics'">
+          <div echarts [options]="resourceMetricsOptions" class="demo-chart"></div>
+        </ng-container>
+        <ng-container *ngIf="activePage === 'taskMetrics'">
+          <div echarts [options]="taskMetricsOptions" class="demo-chart"></div>
+        </ng-container>
       </div>
     </cmdk-list>
   </cmdk-command>

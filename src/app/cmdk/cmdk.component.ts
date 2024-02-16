@@ -1,7 +1,8 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import {Chart} from 'chart.js';
-
+import { NgxEchartsDirective, provideEcharts } from 'ngx-echarts';
+import type { EChartsOption } from 'echarts';
+import LinearGradient from 'zrender/lib/graphic/LinearGradient';
 
 import {
   CommandComponent,
@@ -38,41 +39,247 @@ interface ChatMessage {
     NgIf,
     CommonModule,
     HttpClientModule,
+    NgxEchartsDirective,
   ],
-  providers: [BackendService],
+  providers: [BackendService, provideEcharts(),],
 })
 export class CmdkComponent implements AfterViewInit {
   @ViewChild("meuCanvas", { static: true }) elemento!: ElementRef<HTMLCanvasElement>;
   @ViewChild('cmdkCommand') cmdkCommand!: ElementRef<HTMLDivElement>;
+  taskMetricsOptions: EChartsOption = {};
+  searchResourcesOptions: EChartsOption = {};
+  resourceMetricsOptions: EChartsOption = {};
   constructor(private router: Router, private backendService: BackendService) {}
   ngAfterViewInit() {
-    new Chart(this.elemento.nativeElement, {
-      type: 'line',
-      data: {
-        labels: ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"],
-        datasets: [
-          {
-            data: [85,72,86,81,84,86,94,60,62,65,41,58],
-            borderColor: '#00AEFF',
-            fill: false
-          },
-          {
-            data: [33,38,10,93,68,50,35,29,34,2,62,4],
-            borderColor: "#FFCC00",
-            fill: false
-          }
-        ]
-      },
-      options: {
-        plugins: {
-          legend: {
-            display: false
-          }
-        }
-      }
-    });
+
+    this.buildTaskMetricsChart();
+    this.buildSearchResourcesChart();
+    this.resourceMetricsChart();
   }
 
+  resourceMetricsChart() {
+    this.resourceMetricsOptions = {
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'cross',
+          label: {
+            backgroundColor: '#6a7985',
+          },
+        },
+      },
+      legend: {
+        data: ['X-1', 'X-2', 'X-3', 'X-4', 'X-5'],
+      },
+      grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true,
+      },
+      xAxis: [
+        {
+          type: 'category',
+          boundaryGap: false,
+          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        },
+      ],
+      yAxis: [
+        {
+          type: 'value',
+        },
+      ],
+      series: [
+        {
+          name: 'X-1',
+          type: 'line',
+          stack: 'counts',
+          areaStyle: {},
+          data: [120, 132, 101, 134, 90, 230, 210],
+        },
+        {
+          name: 'X-2',
+          type: 'line',
+          stack: 'counts',
+          areaStyle: {},
+          data: [220, 182, 191, 234, 290, 330, 310],
+        },
+        {
+          name: 'X-3',
+          type: 'line',
+          stack: 'counts',
+          areaStyle: {},
+          data: [150, 232, 201, 154, 190, 330, 410],
+        },
+        {
+          name: 'X-4',
+          type: 'line',
+          stack: 'counts',
+          areaStyle: {},
+          data: [320, 332, 301, 334, 390, 330, 320],
+        },
+        {
+          name: 'X-5',
+          type: 'line',
+          stack: 'counts',
+          label: {
+            show: true,
+            position: 'top',
+          },
+          areaStyle: {},
+          data: [820, 932, 901, 934, 1290, 1330, 1320],
+        },
+      ],
+    };
+  }
+
+  buildSearchResourcesChart() {
+    const dataAxis = [
+      'A',
+      'B',
+      'C',
+      'D',
+      'E',
+      'F',
+      'G',
+      'H',
+      'I',
+      'J',
+      'K',
+      'L',
+      'M',
+      'N',
+      'O',
+      'P',
+      'Q',
+      'R',
+      'S',
+      'T',
+    ];
+    const data = [
+      220, 182, 191, 234, 290, 330, 310, 123, 442, 321, 90, 149, 210, 122, 133, 334, 198, 123, 125,
+      220,
+    ];
+    const yMax = 500;
+    const dataShadow = [];
+
+    for (let i = 0; i < data.length; i++) {
+      dataShadow.push(yMax);
+    }
+
+    this.searchResourcesOptions = {
+      title: {
+        text: 'Check Console for Events',
+      },
+      xAxis: {
+        data: dataAxis,
+        axisLabel: {
+          inside: true,
+          color: '#fff',
+        },
+        axisTick: {
+          show: false,
+        },
+        axisLine: {
+          show: false,
+        },
+        z: 10,
+      },
+      yAxis: {
+        axisLine: {
+          show: false,
+        },
+        axisTick: {
+          show: false,
+        },
+        axisLabel: {
+          color: '#999',
+        },
+      },
+      dataZoom: [
+        {
+          type: 'inside',
+        },
+      ],
+      series: [
+        {
+          // For shadow
+          type: 'bar',
+          itemStyle: {
+            color: 'rgba(0,0,0,0.05)',
+          },
+          barGap: '-100%',
+          barCategoryGap: '40%',
+          data: dataShadow,
+          animation: false,
+        },
+        {
+          type: 'bar',
+          itemStyle: {
+            color: new LinearGradient(0, 0, 0, 1, [
+              { offset: 0, color: '#83bff6' },
+              { offset: 0.5, color: '#188df0' },
+              { offset: 1, color: '#188df0' },
+            ]),
+          },
+          emphasis: {
+            itemStyle: {
+              color: new LinearGradient(0, 0, 0, 1, [
+                { offset: 0, color: '#2378f7' },
+                { offset: 0.7, color: '#2378f7' },
+                { offset: 1, color: '#83bff6' },
+              ]),
+            },
+          },
+          data,
+        },
+      ],
+    };
+  }
+
+  buildTaskMetricsChart() {
+    const xAxisData = [];
+    const data1 = [];
+    const data2 = [];
+
+    for (let i = 0; i < 100; i++) {
+      xAxisData.push('category' + i);
+      data1.push((Math.sin(i / 5) * (i / 5 - 10) + i / 6) * 5);
+      data2.push((Math.cos(i / 5) * (i / 5 - 10) + i / 6) * 5);
+    }
+
+    this.taskMetricsOptions = {
+      legend: {
+        data: ['bar', 'bar2'],
+        align: 'left',
+      },
+      tooltip: {},
+      xAxis: {
+        data: xAxisData,
+        silent: false,
+        splitLine: {
+          show: false,
+        },
+      },
+      yAxis: {},
+      series: [
+        {
+          name: 'bar',
+          type: 'bar',
+          data: data1,
+          animationDelay: idx => idx * 10,
+        },
+        {
+          name: 'bar2',
+          type: 'bar',
+          data: data2,
+          animationDelay: idx => idx * 10 + 100,
+        },
+      ],
+      animationEasing: 'elasticOut',
+      animationDelayUpdate: idx => idx * 5,
+    };
+  }
   
   
   inputValue = '';
@@ -106,11 +313,17 @@ export class CmdkComponent implements AfterViewInit {
         },
         {
           label: 'See Tasks Metrics',
+          itemSelected: () => {
+            this.taskMetrics();
+          },
           icon: 'ph-chart-pie',
           shortcut: '',
         },
       ],
     },
+<<<<<<< HEAD
+   
+=======
     {
       group: 'Resources',
       items: [
@@ -118,14 +331,21 @@ export class CmdkComponent implements AfterViewInit {
           label: 'Search Resources...',
           icon: 'ph-scan',
           shortcut: '^ R',
+          itemSelected: () => {
+            this.searchResources();
+          },
         },
         {
           label: 'See Resources Metrics',
           icon: 'ph-chart-line',
           shortcut: '',
+          itemSelected: () => {
+            this.resourceMetrics();
+          }
         },
       ],
     },
+>>>>>>> 02b435ade64e2af2f746ad224017cae5fe6b0b35
     {
       group: 'Help',
       items: [
@@ -232,6 +452,15 @@ export class CmdkComponent implements AfterViewInit {
   searchTasks() {
     this.pages.push('tasks');
   }
+  taskMetrics() {
+    this.pages.push('taskMetrics');
+  }
+  searchResources() {
+    this.pages.push('searchResources');
+  }
+  resourceMetrics() {
+    this.pages.push('resourceMetrics');
+  }
  searchTask(task: string) {
   this.loading = true; // Define loading como true antes de fazer a solicitação
   this.backendService.post('/chat', { question: task }).subscribe(
@@ -254,7 +483,7 @@ export class CmdkComponent implements AfterViewInit {
     this.pages.push('Help');
   }
   goToHomePage() {
-    if (this.activePage === 'tasks' || this.activePage === 'Task Detail' || this.activePage === 'Help') {
+    if (this.activePage === 'tasks' || this.activePage === 'Task Detail' || this.activePage === 'taskMetrics' || this.activePage === 'searchResources' || this.activePage === 'resourceMetrics' || this.activePage === 'Help') {
       this.popPage(); 
 
      
